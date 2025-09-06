@@ -11,11 +11,10 @@ int board[101];
 void bfs(int start) {
 	queue<int>q;
 	q.push(start);
-	dist[start] = 0;
-
 	for (int i = 0; i <= 100; i++) {
 		dist[i] = -1;
 	}
+	dist[start] = 0;
 
 	while (!q.empty()) {
 		int cur = q.front();
@@ -56,5 +55,5 @@ int main() {
 
 	bfs(1);
 
-	cout << dist[100] + 1 << endl;
+	cout << dist[100] << endl;
 }
