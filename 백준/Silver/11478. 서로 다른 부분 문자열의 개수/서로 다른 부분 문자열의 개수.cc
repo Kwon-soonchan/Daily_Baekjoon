@@ -11,14 +11,9 @@ int main() {
 	cin >> str;
 
 	set<string> s;
-
 	for (int i = 0; i < str.length(); i++) {
-		for (int j = i; j < str.length(); j++) {
-			string str1 = "";
-			for (int k = i; k <= j; k++) {
-				str1 += str[k];
-			}
-			s.insert(str1);
+		for (int len = 1; i + len <= str.length(); len++) {
+			s.insert(str.substr(i, len));
 		}
 	}
 
