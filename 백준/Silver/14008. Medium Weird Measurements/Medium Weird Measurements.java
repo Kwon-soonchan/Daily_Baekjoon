@@ -3,6 +3,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -18,28 +20,41 @@ public class Main {
         }
 
         int cnt = 0;
+        int prev = 0;
+        int cur = 0;
+        int[] checkList = new int[n];
 
         for (int i = 0; i < n; i++) {
+            int size = 0;
+            prev = numList[i];
             cnt++;
+            if (i != n - 1) {
+                for (int j = i + 1; j < n; j++) {
+                    cur = numList[j];
+                    // increase
+                    if ((cur - prev) > 0) {
+                        checkList[size] = 1;
+                        size++;
+                    }
+                    // decrease
+                    else if ((cur - prev) < 0) {
+                        checkList[size] = 0;
+                        size++;
+                    }
+                    // same
+                    else {
+                        break;
+                    }
 
-            int lastDir = 0;
-            for (int j = i + 1; j < n; j++) {
-                long diff = numList[j] - numList[j - 1];
+                    if (size == 1) {
+                        cnt++;
+                    } else if (checkList[size - 1] != checkList[size - 2]) {
+                        cnt++;
+                    } else {
+                        break;
+                    }
 
-                if (diff == 0) {
-                    break;
-                }
-
-                int curDir = (diff > 0) ? 1 : -1;
-
-                if (lastDir == 0) {
-                    lastDir = curDir;
-                    cnt++;
-                } else if (lastDir != curDir) {
-                    lastDir = curDir;
-                    cnt++;
-                } else {
-                    break;
+                    prev = cur;
                 }
             }
         }
