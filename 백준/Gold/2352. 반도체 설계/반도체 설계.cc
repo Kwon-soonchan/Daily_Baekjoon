@@ -1,0 +1,50 @@
+//2352번 반도체 설계
+#include<iostream>
+using namespace std;
+
+int dp[40'001];
+int arr[40'001];
+int lis[40'001];
+
+int binary_search(int left, int right, int find) {
+	while (left < right) {
+		int mid = (left + right) / 2;
+		if (lis[mid] <= find) {
+			left = mid + 1;
+		}
+		else {
+			right = mid;
+		}
+	}
+	return right;
+}
+
+int main() {
+	cin.tie(0);
+	cout.tie(0);
+	ios_base::sync_with_stdio(false);
+
+	int n;
+	cin >> n;
+
+	for (int i = 0; i < n; i++) {
+		cin >> arr[i];
+	}
+
+	int i = 0;
+	int j = 1;
+	lis[0] = arr[0];
+
+	while (i < n) {
+		if (lis[j-1] < arr[i]) {
+			lis[j] = arr[i];
+			j++;
+		}
+		else {
+			int idx = binary_search(0, j, arr[i]);
+			lis[idx] = arr[i];
+		}
+		i++;
+	}
+	cout << j;
+}
